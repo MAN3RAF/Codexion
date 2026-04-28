@@ -10,19 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <pthread.h>
 #include "codexion.h"
+
 
 
 
 int main(int argc, char **argv)
 {
+    t_system system;
 
     if (parse_input(argc, argv))
         return 1;
 
+    data_init(&system, argv);
+
+    
 }

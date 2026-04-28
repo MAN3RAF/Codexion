@@ -1,8 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "codexion.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsebar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/27 09:32:28 by lsebar            #+#    #+#             */
+/*   Updated: 2026/04/27 09:32:28 by lsebar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "codexion.h"
 
 int check_is_digit(char *digits)
 {
@@ -73,4 +81,5 @@ int parse_input(int argc, char **argv)
 		}
 		i++;
 	}
+	return 0;
 }
