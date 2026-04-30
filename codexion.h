@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef CODEXION_H
+#define CODEXION_H
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -19,8 +22,7 @@
 #include <sys/time.h>
 #include <limits.h>
 
-#ifndef CODEXION_H
-#define CODEXION_H
+
 
 int		parse_input(int argc, char **argv);
 int		is_valid_number(char *s);
@@ -35,7 +37,6 @@ void	data_init(t_system *system, char **argv);
 
 
 
-#endif
 
 
 typedef	pthread_mutex_t t_mutex;
@@ -43,10 +44,31 @@ typedef	pthread_mutex_t t_mutex;
 typedef	struct s_system t_system;
 
 
+typedef struct s_node
+{
+	int coder_id;
+	long long deadline;
+	long long request_time;
+
+
+}				t_node;
+
+
+typedef struct s_heap
+{
+	t_node* heap;
+	int size;
+}				t_heap;
+
+
 typedef struct s_dongle
 {
-	t_mutex	dongle;
-	int		dongle_id;
+	t_mutex			dongle_lock;
+	int				dongle_id;
+	pthread_cond_t	waiting_room;
+	int				owner_id;
+	long long		last_dropped_time;
+	t_heap 			min_heap;
 
 }				t_dongle;
 
@@ -57,9 +79,10 @@ typedef struct s_coder
 	int			times_compiled;
 	int			time_until_burnout;
 	long		last_compile;
-	t_dongle	right_dongle;
-	t_dongle	left_dongle;
+	t_dongle	*right_dongle;
+	t_dongle	*left_dongle;
 	pthread_t 	thread_id;
+	t_mutex 	coder_lock;
 	t_system	*system;
 
 }				t_coder;
@@ -75,6 +98,7 @@ typedef struct s_system
 	int			dongle_cooldown;
 	int			start_simulation;
 	bool		end_simulation;
+	t_mutex		system_lock;
 	t_dongle	*dongles;
 	t_coder		*coders;
 	char		*scheduler;
@@ -82,4 +106,5 @@ typedef struct s_system
 }				t_system;
 
 
+#endif
 
