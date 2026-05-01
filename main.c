@@ -23,6 +23,5 @@ int main(int argc, char **argv)
         return 1;
 
     data_init(&system, argv);
-
-    
 }
+

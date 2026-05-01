@@ -22,7 +22,11 @@
 #include <sys/time.h>
 #include <limits.h>
 
+typedef	pthread_mutex_t t_mutex;
+typedef	struct s_system t_system;
 
+
+//=========Parsing========
 
 int		parse_input(int argc, char **argv);
 int		is_valid_number(char *s);
@@ -30,7 +34,16 @@ int		is_valid_scheduler(char *scheduler);
 int		is_number_greather_intmax(char *s);
 int		check_is_digit(char *digits);
 int		is_digit(int c);
-void	data_init(t_system *system, char **argv);
+
+//=========Init========
+
+int		coder_init(t_system *system);
+void	system_init(t_system *system, char **argv);
+int		data_init(t_system *system, char **argv);
+
+//=========Routine========
+
+void	*coder_routine(void *arg);
 
 
 
@@ -39,16 +52,13 @@ void	data_init(t_system *system, char **argv);
 
 
 
-typedef	pthread_mutex_t t_mutex;
-
-typedef	struct s_system t_system;
 
 
 typedef struct s_node
 {
-	int coder_id;
-	long long deadline;
-	long long request_time;
+	int			coder_id;
+	long long	deadline;
+	long long	request_time;
 
 
 }				t_node;
@@ -56,8 +66,8 @@ typedef struct s_node
 
 typedef struct s_heap
 {
-	t_node* heap;
-	int size;
+	t_node*	heap;
+	int		size;
 }				t_heap;
 
 
