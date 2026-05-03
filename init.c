@@ -45,7 +45,7 @@ int coder_init(t_system *system)
         system->coders[i].system = system;
         system->coders[i].left_dongle = &system->dongles[i];
         system->coders[i].right_dongle = &system->dongles[(i + 1) % system->number_of_coders];
-        // pthread_mutex_init(&system->coders[i].coder_lock, NULL);
+        pthread_mutex_init(&system->coders[i].coder_lock, NULL);
         pthread_create(&system->coders[i].thread_id,
             NULL, coder_routine, &system->coders[i]);
         i++;
@@ -70,7 +70,9 @@ void system_init(t_system *system, char **argv)
     system->number_of_compiles_required = atoi(argv[6]);
     system->dongle_cooldown = atoi(argv[7]);
     system->scheduler = argv[8];
+    system->start_time_ms = get_time_ms();
     pthread_mutex_init(&system->system_lock, NULL);
+    pthread_mutex_init(&system->print_lock, NULL);
 }
 
 

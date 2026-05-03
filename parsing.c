@@ -14,7 +14,7 @@
 
 int check_is_digit(char *digits)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < strlen(digits))
@@ -28,16 +28,16 @@ int check_is_digit(char *digits)
 
 int is_valid_scheduler(char *scheduler)
 {
-	if ((strcmp(scheduler, "edf") && strcmp(scheduler, "fifo"))) 
+	if ((strcmp(scheduler, "edf") && strcmp(scheduler, "fifo")))
 		return 1;
 	return 0;
 }
 
 int is_number_greather_intmax(char *s)
 {
-	int		s_len;
-	int		intmax_len;
-	char	*intmax;
+	int 	s_len;
+	int 	intmax_len;
+	char 	*intmax;
 
 	intmax = "2147483647";
 	intmax_len = strlen(intmax);
@@ -59,7 +59,7 @@ int is_valid_number(char *s)
 
 int parse_input(int argc, char **argv)
 {
-	int	i;
+	int i;
 
 	i = 1;
 	if (argc != 9)
