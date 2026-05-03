@@ -13,8 +13,6 @@
 #include "codexion.h"
 
 
-
-
 int main(int argc, char **argv)
 {
     t_system system;
