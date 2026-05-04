@@ -23,8 +23,10 @@ int dongle_init(t_system *system)
         return 1; // Have to bee handled in main!
     while (i < system->number_of_coders)
     {
-        pthread_mutex_init(&system->dongles[i].dongle_lock, NULL);
+        pthread_mutex_init(&system->dongles[i].dongle_lock, NULL);  //new
+        pthread_cond_init(&system->dongles[i].waiting_room, NULL);  //new
         system->dongles[i].dongle_id = i;
+        system->dongles[i].min_heap.heap = malloc(sizeof(t_node) * 2);
         i++;
     }
     return 0;
