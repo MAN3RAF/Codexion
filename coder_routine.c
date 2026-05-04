@@ -24,6 +24,7 @@ void	*coder_routine(void *arg)
     t_dongle    *second;
     long long   time;
 
+    coder = (t_coder *)arg;
     if (coder->left_dongle->dongle_id < coder->right_dongle->dongle_id)
     {
         first = coder->left_dongle;
@@ -34,8 +35,6 @@ void	*coder_routine(void *arg)
         second = coder->left_dongle;
         first = coder->right_dongle;
     }
-
-	coder = (t_coder *)arg;
     time = get_time_ms() - coder->system->start_time_ms;
 	pthread_mutex_lock(&coder->system->print_lock);
 	printf("%lld The coder with the ID %d has been created!\n", time, coder->id);
@@ -60,6 +59,5 @@ void	*coder_routine(void *arg)
         hold_dongle(coder, coder->right_dongle); //test
         // compile_phase();
     }
-   
     return (NULL);
 }

@@ -25,13 +25,22 @@ void swap(t_heap *heap)
     t_node  temp;
     
     temp = heap->heap[0];
-    heap->heap[1] = heap->heap[0];
-    heap->heap[0] = temp;
+    heap->heap[0] = heap->heap[1];
+    heap->heap[1] = temp;
 }
 
 
 void handle_heap(t_coder *coder, t_dongle *dongle)
 {
+    long long   deadline_1;
+    long long   deadline_2;
+    long long   request_time_1;
+    long long   request_time_2;
+
+    deadline_1 = dongle->min_heap.heap[1].deadline;
+    deadline_2 = dongle->min_heap.heap[0].deadline;
+    request_time_1 = dongle->min_heap.heap[0].request_time;
+    request_time_2 = dongle->min_heap.heap[1].request_time;
     if (!dongle->min_heap.heap[0].coder_id)
         write_heap(coder, &dongle->min_heap, 0);
     else
@@ -39,15 +48,18 @@ void handle_heap(t_coder *coder, t_dongle *dongle)
     if (!strcmp(coder->system->scheduler, "edf")
         && dongle->min_heap.heap[1].coder_id == coder->id)
     {
-        if (dongle->min_heap.heap[1].deadline > dongle->min_heap.heap[0].deadline)
+        if (deadline_1 < deadline_2)
             swap(&dongle->min_heap);
+        if (deadline_1 == deadline_2)
+            if (request_time_1 > request_time_2)
+                swap(&dongle->min_heap);
     }
 }
 
 
 void hold_dongle(t_coder *coder, t_dongle *dongle)
 {
-    int                 cooldown;
+    long long           cooldown;
     struct  timespec    abs_time;
 
     pthread_mutex_lock(&dongle->dongle_lock);
@@ -65,7 +77,7 @@ void hold_dongle(t_coder *coder, t_dongle *dongle)
                 &dongle->dongle_lock, &abs_time);
         abs_time = get_abs_time(cooldown);
     }
-    printf("coder %d got the dongle %d", coder->id, dongle->dongle_id);
+    printf("coder %d got the dongle %d", coder->id, dongle->dongle_id);//test
     dongle->owner_id = coder->id;
     swap(&dongle->min_heap);
     erase_heap(&dongle->min_heap, 1);
