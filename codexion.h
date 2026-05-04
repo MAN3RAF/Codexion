@@ -25,32 +25,47 @@
 
 //========pre_def_of_structs========//
 
-typedef pthread_mutex_t t_mutex;
+typedef 				pthread_mutex_t t_mutex;
 typedef struct s_system t_system;
+typedef struct s_coder	t_coder;
+typedef struct s_dogle	t_dongle;
+typedef struct s_heap	t_heap;
+typedef struct s_node	t_node;
 
 //=========Parsing========//
 
-int parse_input(int argc, char **argv);
-int is_valid_number(char *s);
-int is_valid_scheduler(char *scheduler);
-int is_number_greather_intmax(char *s);
-int check_is_digit(char *digits);
-int is_digit(int c);
+int	parse_input(int argc, char **argv);
+int	is_valid_number(char *s);
+int	is_valid_scheduler(char *scheduler);
+int	is_number_greather_intmax(char *s);
+int	check_is_digit(char *digits);
+int	is_digit(int c);
 
 //=========Init========//
 
-int coder_init(t_system *system);
-void system_init(t_system *system, char **argv);
-int data_init(t_system *system, char **argv);
+int		coder_init(t_system *system);
+void 	system_init(t_system *system, char **argv);
+int 	data_init(t_system *system, char **argv);
+int 	dongle_init(t_system *system);
+
+
+//=========heap=========//
+
+void	write_heap(t_coder *c, t_heap *h, int i);
+void	swap(t_heap *heap);
+void	erase_heap(t_heap *h, int i);
+void	handle_heap(t_coder *coder, t_dongle *dongle);
+
 
 //=========Routine========//
 
-void *coder_routine(void *arg);
+void	*coder_routine(void *arg);
 
 //=========Time============//
 
-long long	get_time_ms(void);
-void		safe_sleep(long long wait_time);
+long long			get_time_ms(void);
+void				safe_sleep(long long wait_time);
+struct	timespec	get_abs_time(long long cooldown);
 
 //========Structs============//
 
@@ -76,7 +91,6 @@ typedef struct s_dongle
 	int owner_id;
 	long long last_dropped_time;
 	t_heap min_heap;
-
 } t_dongle;
 
 typedef struct s_coder

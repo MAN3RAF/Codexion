@@ -33,6 +33,14 @@ int dongle_init(t_system *system)
 }
 
 
+void write_heap(t_coder *c, t_heap *h, int i)
+{
+    h->heap[i].coder_id = c->id;
+    h->heap[i].deadline = c->last_compile + c->system->time_to_burnout;
+    h->heap[i].request_time = get_time_ms();
+}
+
+
 int coder_init(t_system *system)
 {
     int i;

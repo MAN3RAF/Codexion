@@ -20,7 +20,20 @@
 void	*coder_routine(void *arg)
 {
 	t_coder     *coder;
+    t_dongle    *first;
+    t_dongle    *second;
     long long   time;
+
+    if (coder->left_dongle->dongle_id < coder->right_dongle->dongle_id)
+    {
+        first = coder->left_dongle;
+        second = coder->right_dongle;
+    }
+    if (coder->left_dongle->dongle_id > coder->right_dongle->dongle_id)
+    {
+        second = coder->left_dongle;
+        first = coder->right_dongle;
+    }
 
 	coder = (t_coder *)arg;
     time = get_time_ms() - coder->system->start_time_ms;
