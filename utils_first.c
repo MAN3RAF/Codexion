@@ -65,6 +65,7 @@ void hold_dongle(t_coder *coder, t_dongle *dongle)
                 &dongle->dongle_lock, &abs_time);
         abs_time = get_abs_time(cooldown);
     }
+    printf("coder %d got the dongle %d", coder->id, dongle->dongle_id);
     dongle->owner_id = coder->id;
     swap(&dongle->min_heap);
     erase_heap(&dongle->min_heap, 1);

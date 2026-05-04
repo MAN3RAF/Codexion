@@ -28,7 +28,7 @@
 typedef 				pthread_mutex_t t_mutex;
 typedef struct s_system t_system;
 typedef struct s_coder	t_coder;
-typedef struct s_dogle	t_dongle;
+typedef struct s_dongle	t_dongle;
 typedef struct s_heap	t_heap;
 typedef struct s_node	t_node;
 
@@ -60,6 +60,7 @@ void	handle_heap(t_coder *coder, t_dongle *dongle);
 //=========Routine========//
 
 void	*coder_routine(void *arg);
+void hold_dongle(t_coder *coder, t_dongle *dongle);
 
 //=========Time============//
 

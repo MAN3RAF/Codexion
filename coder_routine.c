@@ -57,7 +57,7 @@ void	*coder_routine(void *arg)
         }
         pthread_mutex_unlock(&coder->coder_lock);
         
-        
+        hold_dongle(coder, coder->right_dongle); //test
         // compile_phase();
     }
    
