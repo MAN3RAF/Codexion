@@ -37,14 +37,14 @@ void handle_heap(t_coder *coder, t_dongle *dongle)
     long long   request_time_1;
     long long   request_time_2;
 
-    deadline_1 = dongle->min_heap.heap[1].deadline;
-    deadline_2 = dongle->min_heap.heap[0].deadline;
-    request_time_1 = dongle->min_heap.heap[0].request_time;
-    request_time_2 = dongle->min_heap.heap[1].request_time;
     if (!dongle->min_heap.heap[0].coder_id)
         write_heap(coder, &dongle->min_heap, 0);
     else
         write_heap(coder, &dongle->min_heap, 1);
+    deadline_1 = dongle->min_heap.heap[1].deadline;
+    deadline_2 = dongle->min_heap.heap[0].deadline;
+    request_time_1 = dongle->min_heap.heap[0].request_time;
+    request_time_2 = dongle->min_heap.heap[1].request_time;
     if (!strcmp(coder->system->scheduler, "edf")
         && dongle->min_heap.heap[1].coder_id == coder->id)
     {
