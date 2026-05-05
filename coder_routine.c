@@ -2,20 +2,52 @@
 
 #include "codexion.h"
 
-// int compile_phase()
-// {
+void compile_phase(t_coder *coder, t_dongle *first, t_dongle *second)
+{
+    // have to check if not end_simulation or somemeone burnedout!
 
-// }
+    pthread_mutex_lock(&coder->coder_lock);
+    coder->last_compile = get_time_ms();
+    pthread_mutex_unlock(&coder->coder_lock);
 
-// int debugging_phase()
-// {
+    pthread_mutex_lock(&coder->system->print_lock);
+    print("%lld %d coder is compiling", get_time_ms(), coder->id);
+    pthread_mutex_unlock(&coder->system->print_lock);
 
-// }
+    safe_sleep(coder->system->time_to_compile);
 
-// int refactoring_phase()
-// {
+    drop_dongle(first);
+    drop_dongle(second);
 
-// }
+    pthread_mutex_lock(&coder->coder_lock);
+    coder->times_compiled += 1;
+    pthread_mutex_lock(&coder->coder_lock);
+
+    debugging_phase(coder);
+    refactoring_phase(coder);
+}
+
+void debugging_phase(t_coder *coder)
+{
+    // have to check if not end_simulation or somemeone burnedout!
+
+    pthread_mutex_lock(&coder->system->print_lock);
+    print("%lld %d coder is debigging", get_time_ms(), coder->id);
+    pthread_mutex_unlock(&coder->system->print_lock);
+
+    safe_sleep(coder->system->time_to_debug);
+}
+
+int refactoring_phase(t_coder *coder)
+{
+    // have to check if not end_simulation or somemeone burnedout!
+
+    pthread_mutex_lock(&coder->system->print_lock);
+    print("%lld %d coder is refactoring", get_time_ms(), coder->id);
+    pthread_mutex_unlock(&coder->system->print_lock);
+
+    safe_sleep(coder->system->time_to_refactor);
+}
 
 void	*coder_routine(void *arg)
 {
@@ -25,16 +57,7 @@ void	*coder_routine(void *arg)
     long long   time;
 
     coder = (t_coder *)arg;
-    if (coder->left_dongle->dongle_id < coder->right_dongle->dongle_id)
-    {
-        first = coder->left_dongle;
-        second = coder->right_dongle;
-    }
-    if (coder->left_dongle->dongle_id > coder->right_dongle->dongle_id)
-    {
-        second = coder->left_dongle;
-        first = coder->right_dongle;
-    }
+    
     time = get_time_ms() - coder->system->start_time_ms;
 	pthread_mutex_lock(&coder->system->print_lock);
 	printf("%lld The coder with the ID %d has been created!\n", time, coder->id);
@@ -55,9 +78,10 @@ void	*coder_routine(void *arg)
             break;
         }
         pthread_mutex_unlock(&coder->coder_lock);
-        
-        hold_dongle(coder, coder->right_dongle); //test
-        // compile_phase();
+        first_and_second(coder, first, second);
+        hold_dongle(coder, first); //test
+        hold_dongle(coder, second); //test
+        compile_phase(coder, first, second);
     }
     return (NULL);
 }

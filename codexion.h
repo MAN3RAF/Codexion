@@ -49,18 +49,20 @@ int 	data_init(t_system *system, char **argv);
 int 	dongle_init(t_system *system);
 
 
-//=========heap=========//
+//=========Heap=========//
 
 void	write_heap(t_coder *c, t_heap *h, int i);
 void	swap(t_heap *heap);
-void	erase_heap(t_heap *h, int i);
+void	erase_heap(t_heap *h, int index);
 void	handle_heap(t_coder *coder, t_dongle *dongle);
 
 
 //=========Routine========//
 
 void	*coder_routine(void *arg);
-void hold_dongle(t_coder *coder, t_dongle *dongle);
+void	hold_dongle(t_coder *coder, t_dongle *dongle);
+void	first_and_second(t_coder *coder, t_dongle *first, t_dongle *second);
+void	compile_phase(t_coder *coder, t_dongle *first, t_dongle *second);
 
 //=========Time============//
 

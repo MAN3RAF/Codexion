@@ -75,9 +75,10 @@ void hold_dongle(t_coder *coder, t_dongle *dongle)
         else
             pthread_cond_timedwait(&dongle->waiting_room,
                 &dongle->dongle_lock, &abs_time);
+        cooldown = dongle->last_dropped_time + coder->system->dongle_cooldown;
         abs_time = get_abs_time(cooldown);
     }
-    printf("coder %d got the dongle %d", coder->id, dongle->dongle_id);//test
+    // printf("coder %d got the dongle %d\n", coder->id, dongle->dongle_id);//test
     dongle->owner_id = coder->id;
     swap(&dongle->min_heap);
     erase_heap(&dongle->min_heap, 1);
