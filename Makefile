@@ -6,13 +6,14 @@ SRCS = main.c coder_routine.c time.c parsing.c dongle.c \
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-AR = ar
+
 CFLAGS = -Wall -Wextra -Werror -pthread -g
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(AR) rcs $(NAME) $(OBJS)
+$(NAME):	$(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
