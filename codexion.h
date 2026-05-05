@@ -43,10 +43,11 @@ int	is_digit(int c);
 
 //=========Init========//
 
-int		coder_init(t_system *system);
-void 	system_init(t_system *system, char **argv);
-int 	data_init(t_system *system, char **argv);
-int 	dongle_init(t_system *system);
+int			coder_init(t_system *system);
+void 		system_init(t_system *system, char **argv);
+int 		data_init(t_system *system, char **argv);
+int 		dongle_init(t_system *system);
+t_dongle	*first_and_second(t_coder *coder, int i);
 
 
 //=========Heap=========//
@@ -61,14 +62,18 @@ void	handle_heap(t_coder *coder, t_dongle *dongle);
 
 void	*coder_routine(void *arg);
 void	hold_dongle(t_coder *coder, t_dongle *dongle);
-void	first_and_second(t_coder *coder, t_dongle *first, t_dongle *second);
-void	compile_phase(t_coder *coder, t_dongle *first, t_dongle *second);
+void	compile_phase(t_coder *coder);
+void	debugging_phase(t_coder *coder);
+void	refactoring_phase(t_coder *coder);
+
 
 //=========Time============//
 
 long long			get_time_ms(void);
 void				safe_sleep(long long wait_time);
 struct	timespec	get_abs_time(long long cooldown);
+int					is_wait_time(long long start_time, long long wait_time);
+
 
 //========Structs============//
 
@@ -104,6 +109,8 @@ typedef struct s_coder
 	long last_compile;
 	t_dongle *right_dongle;
 	t_dongle *left_dongle;
+	t_dongle *first;
+	t_dongle *second;
 	pthread_t thread_id;
 	t_mutex coder_lock;
 	t_system *system;

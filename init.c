@@ -55,6 +55,8 @@ int coder_init(t_system *system)
         system->coders[i].system = system;
         system->coders[i].left_dongle = &system->dongles[i];
         system->coders[i].right_dongle = &system->dongles[(i + 1) % system->number_of_coders];
+        system->coders[i].first = first_and_second(&system->coders[i], 1);
+        system->coders[i].second = first_and_second(&system->coders[i], 2);
         pthread_mutex_init(&system->coders[i].coder_lock, NULL);
         pthread_create(&system->coders[i].thread_id,
             NULL, coder_routine, &system->coders[i]);

@@ -16,7 +16,7 @@ void safe_sleep(long long wait_time)
     long long   start_time;
 
     start_time = get_time_ms();
-    while ((get_time_ms() - start_time) < wait_time)
+    while (is_wait_time(start_time, wait_time))
         usleep(500);
 }
 

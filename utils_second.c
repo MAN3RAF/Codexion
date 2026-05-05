@@ -34,8 +34,11 @@ void erase_heap(t_heap *h, int index)
 }
 
 
-void first_and_second(t_coder *coder, t_dongle *first, t_dongle *second)
+t_dongle *first_and_second(t_coder *coder, int i)
 {
+	t_dongle *first;
+	t_dongle *second;
+
 	if (coder->left_dongle->dongle_id < coder->right_dongle->dongle_id)
     {
         first = coder->left_dongle;
@@ -46,9 +49,18 @@ void first_and_second(t_coder *coder, t_dongle *first, t_dongle *second)
         second = coder->left_dongle;
         first = coder->right_dongle;
     }
+	if (i == 1)
+		return first;
+	else
+		return second;
 }
 
-// void safe_print(t_coder *coder, char *s)
+int is_wait_time(long long start_time, long long wait_time)
+{
+    return ((get_time_ms() - start_time) < wait_time);
+}
+
+// int safe_print(t_coder *coder, int i)
 // {
 
 // }
