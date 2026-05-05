@@ -25,6 +25,12 @@ long long get_time_ms(void)
     return ((tv.tv_sec * 1000LL) + (tv.tv_usec / 1000LL));
 }
 
+long long get_now_time(t_coder *coder)
+{
+	return (get_time_ms() - coder->system->start_time_ms);
+}
+
+
 int is_wait_time(long long start_time, long long wait_time)
 {
     return ((get_time_ms() - start_time) < wait_time);

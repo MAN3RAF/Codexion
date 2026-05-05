@@ -1,7 +1,7 @@
 NAME = codexion
 
 SRCS = main.c coder_routine.c time.c parsing.c dongle.c \
-	parsing_utils.c utils_second.c heap.c phases.c init.c
+	parsing_utils.c utils_second.c heap.c compile.c init.c
 
 OBJS = $(SRCS:.c=.o)
 

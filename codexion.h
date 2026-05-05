@@ -74,6 +74,8 @@ long long			get_time_ms(void);
 void				safe_sleep(long long wait_time);
 struct	timespec	get_abs_time(long long cooldown);
 int					is_wait_time(long long start_time, long long wait_time);
+long long			get_now_time(t_coder *coder);
+
 
 
 //========Structs============//

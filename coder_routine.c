@@ -8,11 +8,9 @@ void	*coder_routine(void *arg)
     long long   time;
 
     coder = (t_coder *)arg;
-    
     time = get_time_ms() - coder->system->start_time_ms;
-	// pthread_mutex_lock(&coder->system->print_lock);
-	// printf("%lld The coder with the ID %d has been created!\n", time, coder->id);
-	// pthread_mutex_unlock(&coder->system->print_lock); 
+    if (coder->id % 2 == 0)
+        safe_sleep(coder->system->number_of_compiles_required);
     while(1)
     {
         pthread_mutex_lock(&coder->system->system_lock);
