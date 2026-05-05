@@ -5,8 +5,6 @@
 void	*coder_routine(void *arg)
 {
 	t_coder     *coder;
-    t_dongle    *first;
-    t_dongle    *second;
     long long   time;
 
     coder = (t_coder *)arg;
