@@ -62,6 +62,7 @@ void	handle_heap(t_coder *coder, t_dongle *dongle);
 
 void	*coder_routine(void *arg);
 void	hold_dongle(t_coder *coder, t_dongle *dongle);
+void	release_dongle(t_dongle *dongle);
 void	compile_phase(t_coder *coder);
 void	debugging_phase(t_coder *coder);
 void	refactoring_phase(t_coder *coder);
