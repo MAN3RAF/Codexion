@@ -32,6 +32,12 @@ int dongle_init(t_system *system)
     return 0;
 }
 
+void threads_init(t_system *system)
+{
+
+    
+
+}
 
 int coder_init(t_system *system)
 {
@@ -53,6 +59,19 @@ int coder_init(t_system *system)
         pthread_create(&system->coders[i].thread_id,
             NULL, coder_routine, &system->coders[i]);
         i++;
+
+    // have to isolate the coder init and thread init in two deferent funcs!
+
+    // pthread_mutex_lock(&system->start_lock);
+    // system->start_time_ms = get_time_ms(); // The true T=0
+    // system->all_threads_ready = true;      // Open the gates!
+    // pthread_cond_broadcast(&system->start_line); // Wake everyone up!
+    // pthread_mutex_unlock(&system->start_lock);
+
+    //have to do a start simulation function!
+
+    //have to do the monitor init!
+
     }
     i = 0;
     while (i < system->number_of_coders)
@@ -75,8 +94,11 @@ void system_init(t_system *system, char **argv)
     system->dongle_cooldown = atoi(argv[7]);
     system->scheduler = argv[8];
     system->start_time_ms = get_time_ms();
+    system->all_threads_ready = false;
+    pthread_cond_init(&system->start_line, NULL);
     pthread_mutex_init(&system->system_lock, NULL);
     pthread_mutex_init(&system->print_lock, NULL);
+    pthread_mutex_init(&system->start_lock, NULL);
 }
 
 

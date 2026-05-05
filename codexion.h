@@ -23,6 +23,10 @@
 #include <limits.h>
 #include <stddef.h>
 
+#ifndef DEBUGGING
+#define DEBUGGING 0
+#endif
+
 //========pre_def_of_structs========//
 
 typedef 				pthread_mutex_t t_mutex;
@@ -131,6 +135,9 @@ typedef struct s_system
 	int dongle_cooldown;
 	long long start_time_ms;
 	bool end_simulation;
+	bool all_threads_ready;
+	t_mutex start_lock;
+	pthread_cond_t start_line;
 	t_mutex system_lock;
 	t_mutex print_lock;
 	t_dongle *dongles;

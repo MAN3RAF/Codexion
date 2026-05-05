@@ -17,10 +17,13 @@ int main(int argc, char **argv)
 {
     t_system system;
 
+    if (DEBUGGING == 1)
+    {
+        write(1, "DEBUGGING MODE ON!\n", 19);
+    }
     if (parse_input(argc, argv))
         return 1;
 
     data_init(&system, argv);
-
 }
 

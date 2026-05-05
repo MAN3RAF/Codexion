@@ -15,6 +15,9 @@ $(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 
+debug:
+	$(CC) $(CFLAGS) -D DEBUGGING=1 $(SRCS) -o $(NAME) $(LDFLAGS)
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
