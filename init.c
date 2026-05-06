@@ -47,14 +47,13 @@ void threads_init(t_system *system)
     {
         pthread_create(&system->coders[i].thread_id,
             NULL, coder_routine, &system->coders[i]);
-    }
-
-    i = 0;
-    while (i < system->number_of_coders)
-    {
-        pthread_join(system->coders[i].thread_id, NULL);
         i++;
     }
+
+    // if (DEBUGGING == 1)
+    // {
+    //     write(1, "start!\n", 19);
+    // }
 }
 
 int coder_init(t_system *system)
@@ -104,6 +103,7 @@ void system_init(t_system *system, char **argv)
 }
 
 
+
 int data_init(t_system *system, char **argv)
 {
     system_init(system, argv);
@@ -117,7 +117,8 @@ int data_init(t_system *system, char **argv)
     threads_init(system);
     // if (DEBUGGING == 1)
     // {
-    //     write(1, "53!\n", 19);
+    //     write(1, "01!\n", 19);
     // }
+    // start_simulation(system);
     return 0;
 }
