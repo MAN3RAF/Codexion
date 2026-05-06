@@ -2,11 +2,16 @@
 
 #include "codexion.h"
 
+
+
+
+
 void	*coder_routine(void *arg)
 {
 	t_coder     *coder;
     long long   time;
 
+    coder = (t_coder *)arg;
     pthread_mutex_lock(&coder->system->start_lock);
     while (!coder->system->all_threads_ready)
     {    
@@ -16,8 +21,6 @@ void	*coder_routine(void *arg)
 
     // the idea here is to make all the threads wait for others to group up and enter together!
 
-
-    coder = (t_coder *)arg;
     time = get_time_ms() - coder->system->start_time_ms;
     if (coder->id % 2 == 0)
         safe_sleep(coder->system->number_of_compiles_required);

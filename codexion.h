@@ -51,6 +51,7 @@ int			coder_init(t_system *system);
 void 		system_init(t_system *system, char **argv);
 int 		data_init(t_system *system, char **argv);
 int 		dongle_init(t_system *system);
+void		threads_init(t_system *system);
 t_dongle	*first_and_second(t_coder *coder, int i);
 
 
@@ -70,6 +71,7 @@ void	release_dongle(t_dongle *dongle);
 void	compile_phase(t_coder *coder);
 void	debugging_phase(t_coder *coder);
 void	refactoring_phase(t_coder *coder);
+void	start_simulation(t_system *system);
 
 
 //=========Time============//

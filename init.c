@@ -34,9 +34,27 @@ int dongle_init(t_system *system)
 
 void threads_init(t_system *system)
 {
+    int i;
 
-    
+    i = 0;
 
+    // if (DEBUGGING == 1)
+    // {
+    //     write(1, "DEBUGGING INSIDE OF THREAD INIT!\n", 40);
+    // }
+
+    while (i < system->number_of_coders)
+    {
+        pthread_create(&system->coders[i].thread_id,
+            NULL, coder_routine, &system->coders[i]);
+    }
+
+    i = 0;
+    while (i < system->number_of_coders)
+    {
+        pthread_join(system->coders[i].thread_id, NULL);
+        i++;
+    }
 }
 
 int coder_init(t_system *system)
@@ -56,28 +74,12 @@ int coder_init(t_system *system)
         system->coders[i].first = first_and_second(&system->coders[i], 1);
         system->coders[i].second = first_and_second(&system->coders[i], 2);
         pthread_mutex_init(&system->coders[i].coder_lock, NULL);
-        pthread_create(&system->coders[i].thread_id,
-            NULL, coder_routine, &system->coders[i]);
         i++;
 
     // have to isolate the coder init and thread init in two deferent funcs!
 
-    // pthread_mutex_lock(&system->start_lock);
-    // system->start_time_ms = get_time_ms(); // The true T=0
-    // system->all_threads_ready = true;      // Open the gates!
-    // pthread_cond_broadcast(&system->start_line); // Wake everyone up!
-    // pthread_mutex_unlock(&system->start_lock);
-
-    //have to do a start simulation function!
 
     //have to do the monitor init!
-
-    }
-    i = 0;
-    while (i < system->number_of_coders)
-    {
-        pthread_join(system->coders[i].thread_id, NULL);
-        i++;
     }
     return (0);
 }
@@ -107,5 +109,15 @@ int data_init(t_system *system, char **argv)
     system_init(system, argv);
     dongle_init(system);
     coder_init(system);
+    // if (DEBUGGING == 1)
+    // {
+    //     write(1, "00!\n", 19);
+    // }
+
+    threads_init(system);
+    // if (DEBUGGING == 1)
+    // {
+    //     write(1, "53!\n", 19);
+    // }
     return 0;
 }
