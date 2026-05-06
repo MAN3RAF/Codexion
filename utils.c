@@ -12,6 +12,8 @@
 
 
 
+
+
 t_dongle *first_and_second(t_coder *coder, int i)
 {
 	t_dongle *first;

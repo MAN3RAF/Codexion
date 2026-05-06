@@ -74,6 +74,7 @@ int coder_init(t_system *system)
         system->coders[i].right_dongle = &system->dongles[(i + 1) % system->number_of_coders];
         system->coders[i].first = first_and_second(&system->coders[i], 1);
         system->coders[i].second = first_and_second(&system->coders[i], 2);
+        system->coders[i].last_compile = system->start_time_ms;
         pthread_mutex_init(&system->coders[i].coder_lock, NULL);
         i++;
 

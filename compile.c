@@ -12,6 +12,7 @@ void compile_phase(t_coder *coder)
     pthread_mutex_unlock(&coder->system->system_lock);
 
     pthread_mutex_lock(&coder->system->print_lock);
+	// print func!
     printf("%lld %d coder is compiling\n", get_now_time(coder), coder->id);
     pthread_mutex_unlock(&coder->system->print_lock);
 
@@ -33,6 +34,7 @@ void debugging_phase(t_coder *coder)
     // have to check if not end_simulation or somemeone burnedout!
 
     pthread_mutex_lock(&coder->system->print_lock);
+	// print func!
     printf("%lld %d coder is debigging\n", get_now_time(coder), coder->id);
     pthread_mutex_unlock(&coder->system->print_lock);
 
@@ -44,6 +46,7 @@ void refactoring_phase(t_coder *coder)
     // have to check if not end_simulation or somemeone burnedout!
 
     pthread_mutex_lock(&coder->system->print_lock);
+	// print func!
     printf("%lld %d coder is refactoring , compiled: %d\n", get_now_time(coder), coder->id, coder->times_compiled);
     pthread_mutex_unlock(&coder->system->print_lock);
 

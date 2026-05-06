@@ -76,7 +76,8 @@ void	start_simulation(t_system *system);
 
 //========Monitor========//
 
-void *monitor(void *arg);
+void	*monitor(void *arg);
+void	print(t_coder *coder, int i);
 
 
 //=========Time============//

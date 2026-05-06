@@ -36,7 +36,7 @@ void release_dongle(t_dongle *dongle)
 {
     pthread_mutex_lock(&dongle->dongle_lock);
     dongle->last_dropped_time = get_time_ms();
-    printf("%d has released dongle %d\n", dongle->owner_id, dongle->dongle_id);
+    // printf("%d has released dongle %d\n", dongle->owner_id, dongle->dongle_id);
     dongle->owner_id = 0;
     pthread_cond_broadcast(&dongle->waiting_room);
     pthread_mutex_unlock(&dongle->dongle_lock);
