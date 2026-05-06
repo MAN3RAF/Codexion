@@ -50,6 +50,8 @@ void threads_init(t_system *system)
         i++;
     }
 
+    pthread_create(&system->monitor, NULL, monitor, system); // init monitor thread!
+
     // if (DEBUGGING == 1)
     // {
     //     write(1, "start!\n", 19);

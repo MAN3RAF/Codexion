@@ -53,7 +53,7 @@ void	*coder_routine(void *arg)
         }
         pthread_mutex_unlock(&coder->system->system_lock);
         pthread_mutex_lock(&coder->coder_lock);
-        if (coder->times_compiled > coder->system->number_of_compiles_required)
+        if (coder->times_compiled >= coder->system->number_of_compiles_required)
         {
             pthread_mutex_unlock(&coder->coder_lock);
             break;

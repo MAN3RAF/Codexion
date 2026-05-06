@@ -29,7 +29,7 @@
 
 //========pre_def_of_structs========//
 
-typedef 				pthread_mutex_t t_mutex;
+typedef pthread_mutex_t t_mutex;
 typedef struct s_system t_system;
 typedef struct s_coder	t_coder;
 typedef struct s_dongle	t_dongle;
@@ -74,6 +74,11 @@ void	refactoring_phase(t_coder *coder);
 void	start_simulation(t_system *system);
 
 
+//========Monitor========//
+
+void *monitor(void *arg);
+
+
 //=========Time============//
 
 long long			get_time_ms(void);
@@ -81,7 +86,6 @@ void				safe_sleep(long long wait_time);
 struct	timespec	get_abs_time(long long cooldown);
 int					is_wait_time(long long start_time, long long wait_time);
 long long			get_now_time(t_coder *coder);
-
 
 
 //========Structs============//
@@ -145,6 +149,7 @@ typedef struct s_system
 	t_dongle *dongles;
 	t_coder *coders;
 	char *scheduler;
+	pthread_t monitor;
 
 } t_system;
 
