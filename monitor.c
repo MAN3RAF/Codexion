@@ -37,8 +37,8 @@ void ft_print_utils(t_coder *coder, int choice, int burned_out)
 	else if (choice == 4 && !burned_out)
 	{
 		pthread_mutex_lock(&coder->system->print_lock);
-	    printf("%lld %d coder is refactoring , compiled: %d\n", 
-			get_now_time(coder), coder->id, coder->times_compiled);
+	    printf("%lld %d coder is refactoring\n", 
+			get_now_time(coder), coder->id);
     	pthread_mutex_unlock(&coder->system->print_lock);
 	}
 
@@ -53,8 +53,8 @@ void ft_print(t_coder *coder, t_dongle *dongle, int choice) // safe print!
 	if (choice == 1 && !burned_out)
 	{
 		pthread_mutex_lock(&coder->system->print_lock);
-    	printf("%lld %d has taken a dongle %d , compiled: %d\n", time,
-			 coder->id, dongle->dongle_id, coder->times_compiled);
+    	printf("%lld %d has taken a dongle %d\n", time,
+			coder->id, dongle->dongle_id);
     	pthread_mutex_unlock(&coder->system->print_lock);
 	}
 	else if (choice == 5 && !burned_out)
