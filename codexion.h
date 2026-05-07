@@ -72,6 +72,7 @@ void	compile_phase(t_coder *coder);
 void	debugging_phase(t_coder *coder);
 void	refactoring_phase(t_coder *coder);
 void	start_simulation(t_system *system);
+// int		is_owned(t_dongle *dongle);
 
 
 //========Monitor========//
@@ -107,7 +108,7 @@ typedef struct s_node
 typedef struct s_heap
 {
 	t_node *heap;
-	int size;
+	// int size;
 } t_heap;
 
 typedef struct s_dongle
@@ -124,13 +125,13 @@ typedef struct s_coder
 {
 	int id;
 	int times_compiled;
-	int time_until_burnout;
+	// int time_until_burnout;
 	long last_compile;
 	t_dongle *right_dongle;
 	t_dongle *left_dongle;
 	t_dongle *first;
 	t_dongle *second;
-	pthread_t thread_id;
+	pthread_t thread;
 	t_mutex coder_lock;
 	t_system *system;
 
@@ -156,7 +157,6 @@ typedef struct s_system
 	t_coder *coders;
 	char *scheduler;
 	pthread_t monitor;
-
-} t_system;
+}				t_system;
 
 #endif

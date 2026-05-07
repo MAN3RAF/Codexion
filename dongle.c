@@ -2,7 +2,17 @@
 
 #include "codexion.h"
 
+// int is_owned(t_dongle *dongle)
+// {
+// 	int	i;
 
+// 	i = 0;
+// 	pthread_mutex_lock(&dongle->dongle_lock);
+// 	if (dongle->owner_id)
+// 		i = 1;
+// 	pthread_mutex_unlock(&dongle->dongle_lock);
+// 	return i;
+// }
 
 void hold_dongle(t_coder *coder, t_dongle *dongle)
 {
@@ -17,13 +27,8 @@ void hold_dongle(t_coder *coder, t_dongle *dongle)
         || dongle->owner_id 
         || get_time_ms() < cooldown)
     {
-        pthread_mutex_lock(&coder->system->system_lock);
-        if (coder->system->end_simulation)
-        {
-            pthread_mutex_unlock(&coder->system->system_lock);
-            return ;
-        }
-        pthread_mutex_unlock(&coder->system->system_lock);
+        if (is_simulation_end(coder))
+            break;
         if (dongle->owner_id)
             pthread_cond_wait(&dongle->waiting_room, &dongle->dongle_lock);
         else

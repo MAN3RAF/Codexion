@@ -45,7 +45,7 @@ void threads_init(t_system *system)
 
     while (i < system->number_of_coders)
     {
-        pthread_create(&system->coders[i].thread_id,
+        pthread_create(&system->coders[i].thread,
             NULL, coder_routine, &system->coders[i]);
         i++;
     }
@@ -53,9 +53,7 @@ void threads_init(t_system *system)
     pthread_create(&system->monitor, NULL, monitor, system); // init monitor thread!
 
     // if (DEBUGGING == 1)
-    // {
-    //     write(1, "start!\n", 19);
-    // }
+    //     write(1, "Good!\n", 6);
 }
 
 int coder_init(t_system *system)
@@ -70,6 +68,7 @@ int coder_init(t_system *system)
     {
         system->coders[i].id = i + 1;
         system->coders[i].system = system;
+        system->coders->times_compiled = 0;
         system->coders[i].left_dongle = &system->dongles[i];
         system->coders[i].right_dongle = &system->dongles[(i + 1) % system->number_of_coders];
         system->coders[i].first = first_and_second(&system->coders[i], 1);

@@ -26,15 +26,16 @@ void wake_up(t_system *system) //wake up all sleeping Beauties!
 
 int is_compiled_enough(t_coder *coder)
 {
+	int i;
+
+	i = 0;
 	pthread_mutex_lock(&coder->coder_lock);
 	if (coder->times_compiled >= coder->system->number_of_compiles_required)
-	{
-		pthread_mutex_unlock(&coder->coder_lock);
-		return 1;
-	}
+		i = 1;
 	pthread_mutex_unlock(&coder->coder_lock);
-	return 0;
+	return i;
 }
+
 
 
 void	ft_putstr(char *s)

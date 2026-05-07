@@ -19,9 +19,7 @@ int main(int argc, char **argv)
     t_system system;
 
     // if (DEBUGGING == 1)
-    // {
-    //     write(1, "DEBUGGING MODE ON!\n", 19);
-    // }
+    //     write(1, "Good!\n", 6);
 
     if (parse_input(argc, argv))
         return 1;
@@ -29,9 +27,8 @@ int main(int argc, char **argv)
     data_init(&system, argv);
 
     // if (DEBUGGING == 1)
-    // {
-    //     write(1, "10!\n", 19);
-    // }
+    //     write(1, "Good!\n", 6);
+
     start_simulation(&system);
 
 
