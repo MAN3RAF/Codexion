@@ -17,6 +17,13 @@ void hold_dongle(t_coder *coder, t_dongle *dongle)
         || dongle->owner_id 
         || get_time_ms() < cooldown)
     {
+        pthread_mutex_lock(&coder->system->system_lock);
+        if (coder->system->end_simulation)
+        {
+            pthread_mutex_unlock(&coder->system->system_lock);
+            return ;
+        }
+        pthread_mutex_unlock(&coder->system->system_lock);
         if (dongle->owner_id)
             pthread_cond_wait(&dongle->waiting_room, &dongle->dongle_lock);
         else
@@ -28,7 +35,7 @@ void hold_dongle(t_coder *coder, t_dongle *dongle)
     dongle->owner_id = coder->id;
     swap(&dongle->min_heap);
     erase_heap(&dongle->min_heap, 1);
-    printf("%lld %d has taken a dongle %d , compiled: %d\n", get_now_time(coder), coder->id, dongle->dongle_id, coder->times_compiled);//test
+	ft_print(coder, dongle, 1);
     pthread_mutex_unlock(&dongle->dongle_lock);
 }
 

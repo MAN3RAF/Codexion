@@ -4,41 +4,52 @@
 
 #include "codexion.h"
 
-
-void print(t_coder *coder, int i)
+void ft_print_utils(t_coder *coder, int choice, int burned_out)
 {
-	static int	burned_out;
-
-	// have to check if static var is 1 dont print!
-	if (i == 1)
+	if (choice == 2 && !burned_out)
 	{
 		pthread_mutex_lock(&coder->system->print_lock);
     	printf("%lld %d coder is compiling\n", get_now_time(coder), coder->id);
     	pthread_mutex_unlock(&coder->system->print_lock);
 	}
-	else if (i == 2)
+	else if (choice == 3 && !burned_out)
 	{
 		pthread_mutex_lock(&coder->system->print_lock);
     	printf("%lld %d coder is debigging\n", get_now_time(coder), coder->id);
     	pthread_mutex_unlock(&coder->system->print_lock);
 	}
-	else if (i == 3)
+	else if (choice == 4 && !burned_out)
 	{
 		pthread_mutex_lock(&coder->system->print_lock);
-	    printf("%lld %d coder is refactoring , compiled: %d\n", get_now_time(coder), coder->id, coder->times_compiled);
-    	pthread_mutex_unlock(&coder->system->print_lock);
-	}
-	else if (i == 4)
-	{
-		//have to set static var to a value!
-		pthread_mutex_lock(&coder->system->print_lock);
-    	write(1, get_now_time(coder), 1);
-		write(1, coder->id, 1);
-		write(1, "burned out\n", 11);
+	    printf("%lld %d coder is refactoring , compiled: %d\n", 
+			get_now_time(coder), coder->id, coder->times_compiled);
     	pthread_mutex_unlock(&coder->system->print_lock);
 	}
 
+}
 
+void ft_print(t_coder *coder, t_dongle *dongle, int choice)
+{
+	static int	burned_out;
+	long long	time;
+
+	time = get_now_time(coder);
+	if (choice == 1 && !burned_out)
+	{
+		pthread_mutex_lock(&coder->system->print_lock);
+    	printf("%lld %d has taken a dongle %d , compiled: %d\n", time,
+			 coder->id, dongle->dongle_id, coder->times_compiled);
+    	pthread_mutex_unlock(&coder->system->print_lock);
+	}
+	else if (choice == 5 && !burned_out)
+	{
+		burned_out = 1;
+		pthread_mutex_lock(&coder->system->print_lock);
+		printf("%lld %d burtned out\n", time, coder->id);
+    	pthread_mutex_unlock(&coder->system->print_lock);
+	}
+	else
+		ft_print_utils(coder, choice, burned_out);
 }
 
 
@@ -56,8 +67,10 @@ void *monitor(void *arg)
 		coder = system->coders[i];
 		if ((get_time_ms() - coder.last_compile) > system->time_to_burnout 
 			&& coder.times_compiled != system->number_of_compiles_required)
-		{	
-			print(coder, 4);
+		{
+			system->end_simulation = true;
+			ft_print(&system->coders[i], NULL, 5);
+			// write(1, "SOMEONE BURNED OUT!!!!!!\n", 25);
 			break;
 			// print func!
 		}
