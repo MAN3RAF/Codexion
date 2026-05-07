@@ -11,6 +11,32 @@
 // }
 
 
+void wake_up(t_system *system) //wake up all sleeping Beauties!
+{
+	int	i;
+
+	i = 0;
+	while (i < system->number_of_coders)
+	{
+		pthread_cond_broadcast(&system->coders[i].first->waiting_room);
+		pthread_cond_broadcast(&system->coders[i].second->waiting_room);
+		i++;
+	}
+}
+
+int is_compiled_enough(t_coder *coder)
+{
+	pthread_mutex_lock(&coder->coder_lock);
+	if (coder->times_compiled >= coder->system->number_of_compiles_required)
+	{
+		pthread_mutex_unlock(&coder->coder_lock);
+		return 1;
+	}
+	pthread_mutex_unlock(&coder->coder_lock);
+	return 0;
+}
+
+
 void	ft_putstr(char *s)
 {
 	if (!s)

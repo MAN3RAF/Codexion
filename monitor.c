@@ -4,6 +4,23 @@
 
 #include "codexion.h"
 
+
+
+
+int	is_simulation_end(t_coder *coder) //check if sim ended!
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_lock(&coder->system->system_lock);
+	if(!coder->system->end_simulation)
+		i = 1;
+	pthread_mutex_unlock(&coder->system->system_lock);
+	return i;
+}
+
+// aplie these funcs in code!
+
 void ft_print_utils(t_coder *coder, int choice, int burned_out)
 {
 	if (choice == 2 && !burned_out)
@@ -28,7 +45,7 @@ void ft_print_utils(t_coder *coder, int choice, int burned_out)
 
 }
 
-void ft_print(t_coder *coder, t_dongle *dongle, int choice)
+void ft_print(t_coder *coder, t_dongle *dongle, int choice) // safe print!
 {
 	static int	burned_out;
 	long long	time;
@@ -53,7 +70,6 @@ void ft_print(t_coder *coder, t_dongle *dongle, int choice)
 }
 
 
-
 void *monitor(void *arg)
 {
 	t_system *system;
@@ -68,15 +84,15 @@ void *monitor(void *arg)
 		if ((get_time_ms() - coder.last_compile) > system->time_to_burnout 
 			&& coder.times_compiled != system->number_of_compiles_required)
 		{
+			pthread_mutex_lock(&system->system_lock);
 			system->end_simulation = true;
+			pthread_mutex_unlock(&system->system_lock);
 			ft_print(&system->coders[i], NULL, 5);
-			// write(1, "SOMEONE BURNED OUT!!!!!!\n", 25);
 			break;
-			// print func!
 		}
 		i++;
 		i = i % system->number_of_coders;
-
 	}
+	wake_up(system);
 	return NULL;
 }

@@ -78,7 +78,10 @@ void	start_simulation(t_system *system);
 
 void	*monitor(void *arg);
 void	ft_print(t_coder *coder, t_dongle *dongle, int i);
-void	ft_putstr(char *s);
+// void	ft_putstr(char *s);
+int		is_simulation_end(t_coder *coder);
+void	wake_up(t_system *system);
+int		is_compiled_enough(t_coder *coder);
 
 
 
