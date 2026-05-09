@@ -29,4 +29,5 @@ fclean: clean
 
 re: fclean all
 
+.SECONDARY: $(OBJS)
 .PHONY: all clean fclean re

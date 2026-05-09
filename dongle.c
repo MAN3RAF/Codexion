@@ -28,7 +28,10 @@ void hold_dongle(t_coder *coder, t_dongle *dongle)
         || get_time_ms() < cooldown)
     {
         if (is_simulation_end(coder))
-            break;
+        {
+            pthread_mutex_unlock(&dongle->dongle_lock);
+            return;
+        }
         if (dongle->owner_id)
             pthread_cond_wait(&dongle->waiting_room, &dongle->dongle_lock);
         else
@@ -38,7 +41,7 @@ void hold_dongle(t_coder *coder, t_dongle *dongle)
         abs_time = get_abs_time(cooldown);
     }
     dongle->owner_id = coder->id;
-    swap(&dongle->min_heap);
+    swap_heap(&dongle->min_heap);
     erase_heap(&dongle->min_heap, 1);
 	ft_print(coder, dongle, 1);
     pthread_mutex_unlock(&dongle->dongle_lock);

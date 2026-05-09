@@ -58,7 +58,7 @@ t_dongle	*first_and_second(t_coder *coder, int i);
 //=========Heap=========//
 
 void	write_heap(t_coder *c, t_heap *h, int i);
-void	swap(t_heap *heap);
+void	swap_heap(t_heap *heap);
 void	erase_heap(t_heap *h, int index);
 void	handle_heap(t_coder *coder, t_dongle *dongle);
 
@@ -83,6 +83,12 @@ void	ft_print(t_coder *coder, t_dongle *dongle, int i);
 int		is_simulation_end(t_coder *coder);
 void	wake_up(t_system *system);
 int		is_compiled_enough(t_coder *coder);
+int		burned_out(t_system *system, int i, int counter);
+
+
+//========Free============//
+
+void clean(t_system *system);
 
 
 

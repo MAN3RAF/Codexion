@@ -26,7 +26,13 @@ int dongle_init(t_system *system)
         pthread_mutex_init(&system->dongles[i].dongle_lock, NULL);  //new
         pthread_cond_init(&system->dongles[i].waiting_room, NULL);  //new
         system->dongles[i].dongle_id = i;
+        system->dongles[i].owner_id = 0;
+        system->dongles[i].last_dropped_time = 0;
         system->dongles[i].min_heap.heap = malloc(sizeof(t_node) * 2);
+        if (!system->dongles[i].min_heap.heap)
+            return 1;
+        erase_heap(&system->dongles[i].min_heap, 0);
+        erase_heap(&system->dongles[i].min_heap, 1);
         i++;
     }
     return 0;
@@ -68,7 +74,7 @@ int coder_init(t_system *system)
     {
         system->coders[i].id = i + 1;
         system->coders[i].system = system;
-        system->coders->times_compiled = 0;
+        system->coders[i].times_compiled = 0;
         system->coders[i].left_dongle = &system->dongles[i];
         system->coders[i].right_dongle = &system->dongles[(i + 1) % system->number_of_coders];
         system->coders[i].first = first_and_second(&system->coders[i], 1);
@@ -98,6 +104,7 @@ void system_init(t_system *system, char **argv)
     system->scheduler = argv[8];
     system->start_time_ms = get_time_ms();
     system->all_threads_ready = false;
+    system->end_simulation = false;
     pthread_cond_init(&system->start_line, NULL);
     pthread_mutex_init(&system->system_lock, NULL);
     pthread_mutex_init(&system->print_lock, NULL);
@@ -109,18 +116,14 @@ void system_init(t_system *system, char **argv)
 int data_init(t_system *system, char **argv)
 {
     system_init(system, argv);
-    dongle_init(system);
-    coder_init(system);
-    // if (DEBUGGING == 1)
-    // {
-    //     write(1, "00!\n", 19);
-    // }
-
+    if (dongle_init(system))
+        return 1;
+    if (coder_init(system))
+        return 1;
     threads_init(system);
+
     // if (DEBUGGING == 1)
-    // {
     //     write(1, "01!\n", 19);
-    // }
-    // start_simulation(system);
+
     return 0;
 }

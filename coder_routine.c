@@ -37,9 +37,9 @@ void	*coder_routine(void *arg)
     while (!coder->system->all_threads_ready)
         pthread_cond_wait(&coder->system->start_line,&coder->system->start_lock);
     pthread_mutex_unlock(&coder->system->start_lock);
-    time = get_time_ms() - coder->system->start_time_ms;
+    time = get_now_time(coder);
     if (coder->id % 2 == 0)
-        safe_sleep(coder->system->number_of_compiles_required);
+        safe_sleep(1); //coder->system->number_of_compiles_required
     while(1)
     {
         if (is_simulation_end(coder))
@@ -48,7 +48,11 @@ void	*coder_routine(void *arg)
             break;
         hold_dongle(coder, coder->first);
         hold_dongle(coder, coder->second);
+        if (DEBUGGING == 1)
+            write(1, "before!\n", 8);
         compile_phase(coder);
+        if (DEBUGGING == 1)
+            write(1, "after!\n", 7);
     }
     return (NULL);
 }

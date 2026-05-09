@@ -24,7 +24,8 @@ int main(int argc, char **argv)
     if (parse_input(argc, argv))
         return 1;
 
-    data_init(&system, argv);
+    if (data_init(&system, argv))
+        return 1;
 
     // if (DEBUGGING == 1)
     //     write(1, "Good!\n", 6);

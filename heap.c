@@ -18,7 +18,7 @@ void erase_heap(t_heap *h, int index)
     h->heap[index].request_time = 0;
 }
 
-void swap(t_heap *heap)
+void swap_heap(t_heap *heap)
 {
     t_node  temp;
     
@@ -39,6 +39,7 @@ void handle_heap(t_coder *coder, t_dongle *dongle)
         write_heap(coder, &dongle->min_heap, 0);
     else
         write_heap(coder, &dongle->min_heap, 1);
+
     deadline_1 = dongle->min_heap.heap[1].deadline;
     deadline_2 = dongle->min_heap.heap[0].deadline;
     request_time_1 = dongle->min_heap.heap[0].request_time;
@@ -47,10 +48,10 @@ void handle_heap(t_coder *coder, t_dongle *dongle)
         && dongle->min_heap.heap[1].coder_id == coder->id)
     {
         if (deadline_1 < deadline_2)
-            swap(&dongle->min_heap);
+            swap_heap(&dongle->min_heap);
         if (deadline_1 == deadline_2)
             if (request_time_1 > request_time_2)
-                swap(&dongle->min_heap);
+                swap_heap(&dongle->min_heap);
     }
 }
 
