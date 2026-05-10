@@ -30,6 +30,6 @@ int main(int argc, char **argv)
     if (data_init(&system, argv))
         return 1;
     start_simulation(&system);
-    // clean(&system);
+    clean(&system);
 }
 
