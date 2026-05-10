@@ -1,13 +1,13 @@
 NAME = codexion
 
 SRCS = main.c coder_routine.c time.c parsing.c dongle.c \
-	parsing_utils.c utils.c heap.c compile.c init.c monitor.c
+	parsing_utils.c utils.c heap.c compile.c init.c monitor.c clean.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -pthread -g
+CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
 
 all: $(NAME)
 

@@ -24,6 +24,7 @@ void start_simulation(t_system *system)
         pthread_join(system->coders[i].thread, NULL);
         i++;
     }
+    pthread_join(system->monitor, NULL);
 }
 
 

@@ -75,21 +75,21 @@ void ft_print(t_coder *coder, t_dongle *dongle, int choice) // safe print!
 
 int burned_out(t_system *system, int i, int counter)
 {
-	t_coder	coder;
+	t_coder	*coder;
 
 	while (1)
 	{
-		coder = system->coders[i];
+		coder = &system->coders[i];
 		pthread_mutex_lock(&system->system_lock);
-		if ((get_time_ms() - coder.last_compile) > system->time_to_burnout 
-			&& coder.times_compiled < system->number_of_compiles_required)
+		if ((get_time_ms() - coder->last_compile) > system->time_to_burnout 
+			&& coder->times_compiled < system->number_of_compiles_required)
 		{
 			system->end_simulation = true;
-			ft_print(&system->coders[i], NULL, 5);
+			ft_print(coder, NULL, 5);
 			pthread_mutex_unlock(&system->system_lock);
 			return 1;
 		}
-		else if (coder.times_compiled >= system->number_of_compiles_required)
+		else if (coder->times_compiled >= system->number_of_compiles_required)
 			counter++;
 		pthread_mutex_unlock(&system->system_lock);
 		if (counter == system->number_of_coders)

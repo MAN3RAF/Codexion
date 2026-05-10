@@ -20,18 +20,16 @@ int main(int argc, char **argv)
 
     // if (DEBUGGING == 1)
     //     write(1, "Good!\n", 6);
-
+    if (atoi(argv[1]) == 1)
+	{
+    	printf("Programm Cant run with 1 coder!");
+		return 1;
+	}
     if (parse_input(argc, argv))
         return 1;
-
     if (data_init(&system, argv))
         return 1;
-
-    // if (DEBUGGING == 1)
-    //     write(1, "Good!\n", 6);
-
     start_simulation(&system);
-
-
+    // clean(&system);
 }
 

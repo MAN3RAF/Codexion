@@ -20,9 +20,9 @@ void compile_phase(t_coder *coder)
     release_dongle(coder->first);
     release_dongle(coder->second);
 
-    pthread_mutex_lock(&coder->coder_lock);
+    pthread_mutex_lock(&coder->system->system_lock);
     coder->times_compiled += 1;
-    pthread_mutex_unlock(&coder->coder_lock);
+    pthread_mutex_unlock(&coder->system->system_lock);
 
     debugging_phase(coder);
     refactoring_phase(coder);
