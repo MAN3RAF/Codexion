@@ -14,9 +14,9 @@
 
 void	compile_phase(t_coder *coder)
 {
-	pthread_mutex_lock(&coder->system->system_lock);
+	pthread_mutex_lock(&coder->coder_lock);
 	coder->last_compile = get_time_ms();
-	pthread_mutex_unlock(&coder->system->system_lock);
+	pthread_mutex_unlock(&coder->coder_lock);
 	ft_print(coder, 2);
 	if (is_simulation_end(coder))
 		return ;
@@ -25,9 +25,9 @@ void	compile_phase(t_coder *coder)
 		return ;
 	release_dongle(coder->first);
 	release_dongle(coder->second);
-	pthread_mutex_lock(&coder->system->system_lock);
+	pthread_mutex_lock(&coder->coder_lock);
 	coder->times_compiled += 1;
-	pthread_mutex_unlock(&coder->system->system_lock);
+	pthread_mutex_unlock(&coder->coder_lock);
 	debugging_phase(coder);
 	refactoring_phase(coder);
 }

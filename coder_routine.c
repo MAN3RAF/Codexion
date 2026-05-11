@@ -41,6 +41,9 @@ void	*coder_routine(void *arg)
 		pthread_cond_wait(&coder->system->start_line,
 			&coder->system->start_lock);
 	pthread_mutex_unlock(&coder->system->start_lock);
+	pthread_mutex_lock(&coder->coder_lock);
+	coder->last_compile = get_time_ms();
+	pthread_mutex_unlock(&coder->coder_lock);
 	time = get_now_time(coder);
 	if (coder->id % 2 == 0)
 		safe_sleep(1);

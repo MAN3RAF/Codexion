@@ -60,23 +60,31 @@ int	burned_out(t_system *system, int i, int counter)
 
 	while (1)
 	{
+		if (i == 0)
+			counter = 0;
 		coder = &system->coders[i];
-		pthread_mutex_lock(&system->system_lock);
+		pthread_mutex_lock(&coder->coder_lock);
 		if ((get_time_ms() - coder->last_compile) > system->time_to_burnout
 			&& coder->times_compiled < system->number_of_compiles_required)
 		{
+			pthread_mutex_unlock(&coder->coder_lock);
+			pthread_mutex_lock(&system->system_lock);
 			system->end_simulation = true;
-			ft_print(coder, 5);
 			pthread_mutex_unlock(&system->system_lock);
+			ft_print(coder, 5);
 			return (1);
 		}
-		else if (coder->times_compiled >= system->number_of_compiles_required)
+		if (coder->times_compiled >= system->number_of_compiles_required)
 			counter++;
-		pthread_mutex_unlock(&system->system_lock);
+		pthread_mutex_unlock(&coder->coder_lock);
+		// pthread_mutex_lock(&coder->coder_lock);
+		
+		// pthread_mutex_unlock(&coder->coder_lock);
 		if (counter == system->number_of_coders)
 			break ;
 		i++;
 		i = i % system->number_of_coders;
+		usleep(50);
 	}
 	return (0);
 }
