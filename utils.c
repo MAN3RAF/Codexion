@@ -1,17 +1,25 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsebar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/11 08:43:14 by lsebar            #+#    #+#             */
+/*   Updated: 2026/05/11 08:43:15 by lsebar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "codexion.h"
-
 
 // int is_first_free(t_heap *heap)
 // {
 // 	if (heap->heap[0].coder_id)
-// 		return 1;
-// 	return 0;
+// 		return (1);
+// 	return (0);
 // }
 
-
-void wake_up(t_system *system) //wake up all sleeping Beauties!
+void	wake_up(t_system *system) // wake up all sleeping Beauties!
 {
 	int	i;
 
@@ -24,19 +32,17 @@ void wake_up(t_system *system) //wake up all sleeping Beauties!
 	}
 }
 
-int is_compiled_enough(t_coder *coder)
+int	is_compiled_enough(t_coder *coder)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	pthread_mutex_lock(&coder->coder_lock);
 	if (coder->times_compiled >= coder->system->number_of_compiles_required)
 		i = 1;
 	pthread_mutex_unlock(&coder->coder_lock);
-	return i;
+	return (i);
 }
-
-
 
 void	ft_putstr(char *s)
 {
@@ -49,29 +55,26 @@ void	ft_putstr(char *s)
 	}
 }
 
-
-t_dongle *first_and_second(t_coder *coder, int i)
+t_dongle	*first_and_second(t_coder *coder, int i)
 {
-	t_dongle *first;
-	t_dongle *second;
+	t_dongle	*first;
+	t_dongle	*second;
 
 	if (coder->left_dongle->dongle_id < coder->right_dongle->dongle_id)
-    {
-        first = coder->left_dongle;
-        second = coder->right_dongle;
-    }
-    if (coder->left_dongle->dongle_id > coder->right_dongle->dongle_id)
-    {
-        second = coder->left_dongle;
-        first = coder->right_dongle;
-    }
+	{
+		first = coder->left_dongle;
+		second = coder->right_dongle;
+	}
+	if (coder->left_dongle->dongle_id > coder->right_dongle->dongle_id)
+	{
+		second = coder->left_dongle;
+		first = coder->right_dongle;
+	}
 	if (i == 1)
-		return first;
+		return (first);
 	else
-		return second;
+		return (second);
 }
-
-
 
 // int safe_print(t_coder *coder, int i)
 // {

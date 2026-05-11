@@ -1,23 +1,32 @@
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsebar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/11 08:40:06 by lsebar            #+#    #+#             */
+/*   Updated: 2026/05/11 08:40:42 by lsebar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "codexion.h"
 
-
-void free_dongles(t_system *system)
+void	free_dongles(t_system *system)
 {
 	int	i;
 
 	i = 0;
 	while (i < system->number_of_coders)
 	{
-		free(system->dongles[i].min_heap.heap);
+		if (system->dongles[i].min_heap.heap)
+			free(system->dongles[i].min_heap.heap);
 		i++;
 	}
 	free(system->dongles);
 }
 
-void destroy_dongles_mutexes(t_system *system)
+void	destroy_dongles_mutexes(t_system *system)
 {
 	int	i;
 
@@ -29,7 +38,7 @@ void destroy_dongles_mutexes(t_system *system)
 	}
 }
 
-void destroy_coders_mutexes(t_system *system)
+void	destroy_coders_mutexes(t_system *system)
 {
 	int	i;
 
@@ -41,21 +50,15 @@ void destroy_coders_mutexes(t_system *system)
 	}
 }
 
-void destroy_system_mutexes(t_system *system)
+void	destroy_system_mutexes(t_system *system)
 {
 	pthread_mutex_destroy(&system->system_lock);
 	pthread_mutex_destroy(&system->print_lock);
 	pthread_mutex_destroy(&system->start_lock);
 }
 
-
-void clean(t_system *system)
+void	clean(t_system *system)
 {
-	// destroy all mutexes!
-	// do func to free if a burn out!
-	// do func to free if the dongles!
-	// do func to free the coders!
-
 	destroy_dongles_mutexes(system);
 	destroy_coders_mutexes(system);
 	destroy_system_mutexes(system);

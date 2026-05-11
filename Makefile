@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                          :::      ::::::::   #
+#   Makefile                                             :+:      :+:    :+:   #
+#                                                      +:+ +:+         +:+     #
+#   By: lsebar <marvin@42.fr>                        +#+  +:+       +#+        #
+#                                                  +#+#+#+#+#+   +#+           #
+#   Created: 2026/05/11 11:47:01 by lsebar              #+#    #+#             #
+#   Updated: 2026/05/11 11:47:01 by lsebar             ###   ########.fr       #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = codexion
 
 SRCS = main.c coder_routine.c time.c parsing.c dongle.c \
@@ -7,16 +19,12 @@ OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -pthread -g 
+CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
 
 all: $(NAME)
 
 $(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
-
-
-debug:
-	$(CC) $(CFLAGS) -D DEBUGGING=1 $(SRCS) -o $(NAME) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
