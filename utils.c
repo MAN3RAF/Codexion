@@ -75,8 +75,3 @@ t_dongle	*first_and_second(t_coder *coder, int i)
 	else
 		return (second);
 }
-
-// int safe_print(t_coder *coder, int i)
-// {
-
-// }

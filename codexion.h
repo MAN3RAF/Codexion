@@ -72,6 +72,9 @@ void					compile_phase(t_coder *coder);
 void					debugging_phase(t_coder *coder);
 void					refactoring_phase(t_coder *coder);
 void					start_simulation(t_system *system);
+void					end_simulation(t_system *system, t_coder *coder);
+void					wait_for_others(t_coder *coder);
+
 // int		is_owned(t_dongle *dongle);
 // void					handel_one_coder(t_coder *coder);
 

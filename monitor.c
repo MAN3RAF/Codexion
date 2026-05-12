@@ -35,7 +35,7 @@ void	ft_print_utils(t_coder *coder, int choice, int burned_out)
 			coder->id);
 }
 
-void	ft_print(t_coder *coder, int choice) // safe print!
+void	ft_print(t_coder *coder, int choice)
 {
 	static int	burned_out;
 	long long	time;
@@ -68,23 +68,16 @@ int	burned_out(t_system *system, int i, int counter)
 			&& coder->times_compiled < system->number_of_compiles_required)
 		{
 			pthread_mutex_unlock(&coder->coder_lock);
-			pthread_mutex_lock(&system->system_lock);
-			system->end_simulation = true;
-			pthread_mutex_unlock(&system->system_lock);
-			ft_print(coder, 5);
+			end_simulation(system, coder);
 			return (1);
 		}
 		if (coder->times_compiled >= system->number_of_compiles_required)
 			counter++;
 		pthread_mutex_unlock(&coder->coder_lock);
-		// pthread_mutex_lock(&coder->coder_lock);
-		
-		// pthread_mutex_unlock(&coder->coder_lock);
 		if (counter == system->number_of_coders)
 			break ;
 		i++;
 		i = i % system->number_of_coders;
-		// usleep(50);
 	}
 	return (0);
 }

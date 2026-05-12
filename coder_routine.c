@@ -30,17 +30,30 @@ void	start_simulation(t_system *system)
 	pthread_join(system->monitor, NULL);
 }
 
+void	end_simulation(t_system *system, t_coder *coder)
+{
+	pthread_mutex_lock(&system->system_lock);
+	system->end_simulation = true;
+	pthread_mutex_unlock(&system->system_lock);
+	ft_print(coder, 5);
+}
+
+void	wait_for_others(t_coder *coder)
+{
+	pthread_mutex_lock(&coder->system->start_lock);
+	while (!coder->system->all_threads_ready)
+		pthread_cond_wait(&coder->system->start_line,
+			&coder->system->start_lock);
+	pthread_mutex_unlock(&coder->system->start_lock);
+}
+
 void	*coder_routine(void *arg)
 {
 	t_coder		*coder;
 	long long	time;
 
 	coder = (t_coder *)arg;
-	pthread_mutex_lock(&coder->system->start_lock);
-	while (!coder->system->all_threads_ready)
-		pthread_cond_wait(&coder->system->start_line,
-			&coder->system->start_lock);
-	pthread_mutex_unlock(&coder->system->start_lock);
+	wait_for_others(coder);
 	pthread_mutex_lock(&coder->coder_lock);
 	coder->last_compile = get_time_ms();
 	pthread_mutex_unlock(&coder->coder_lock);
