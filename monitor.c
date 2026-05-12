@@ -40,8 +40,8 @@ void	ft_print(t_coder *coder, int choice) // safe print!
 	static int	burned_out;
 	long long	time;
 
-	time = get_now_time(coder);
 	pthread_mutex_lock(&coder->system->print_lock);
+	time = get_now_time(coder);
 	if (choice == 1 && !burned_out)
 		printf("%lld %d has taken a dongle\n", time, coder->id);
 	else if (choice == 5 && !burned_out)
@@ -84,7 +84,7 @@ int	burned_out(t_system *system, int i, int counter)
 			break ;
 		i++;
 		i = i % system->number_of_coders;
-		usleep(50);
+		// usleep(50);
 	}
 	return (0);
 }

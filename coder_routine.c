@@ -46,7 +46,7 @@ void	*coder_routine(void *arg)
 	pthread_mutex_unlock(&coder->coder_lock);
 	time = get_now_time(coder);
 	if (coder->id % 2 == 0)
-		safe_sleep(1);
+		safe_sleep(5);
 	while (1)
 	{
 		if (is_simulation_end(coder))
