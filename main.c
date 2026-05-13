@@ -16,11 +16,6 @@ int	main(int argc, char **argv)
 {
 	t_system	system;
 
-	if (atoi(argv[1]) == 1)
-	{
-		printf("Programm can not run with 1 coder!");
-		return (1);
-	}
 	if (parse_input(argc, argv))
 		return (1);
 	if (data_init(&system, argv))

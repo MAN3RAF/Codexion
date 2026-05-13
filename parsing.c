@@ -67,9 +67,14 @@ int	is_valid_input(char **argv)
 
 int	parse_input(int argc, char **argv)
 {
-	if (argc != 9)
+	if (argc < 9)
 	{
 		printf("[ERROR] More or Less than 9 arguments!");
+		return (1);
+	}
+	if (atoi(argv[1]) == 1)
+	{
+		printf("Programm can not run with 1 coder!");
 		return (1);
 	}
 	if (is_valid_scheduler(argv[8]))
