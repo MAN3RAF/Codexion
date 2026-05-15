@@ -12,18 +12,6 @@
 
 #include "codexion.h"
 
-// int is_owned(t_dongle *dongle)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	pthread_mutex_lock(&dongle->dongle_lock);
-// 	if (dongle->owner_id)
-// 		i = 1;
-// 	pthread_mutex_unlock(&dongle->dongle_lock);
-// 	return (i);
-// }
-
 void	own_dongle(t_coder *coder, t_dongle *dongle)
 {
 	dongle->owner_id = coder->id;

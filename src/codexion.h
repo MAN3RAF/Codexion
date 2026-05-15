@@ -75,9 +75,6 @@ void					start_simulation(t_system *system);
 void					end_simulation(t_system *system, t_coder *coder);
 void					wait_for_others(t_coder *coder);
 
-// int		is_owned(t_dongle *dongle);
-// void					handel_one_coder(t_coder *coder);
-
 //========Monitor========//
 
 void					*monitor(void *arg);
@@ -134,7 +131,6 @@ typedef struct s_coder
 {
 	int					id;
 	int					times_compiled;
-	// int time_until_burnout;
 	long				last_compile;
 	t_dongle			*right_dongle;
 	t_dongle			*left_dongle;

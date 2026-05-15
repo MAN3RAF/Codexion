@@ -12,14 +12,7 @@
 
 #include "codexion.h"
 
-// int is_first_free(t_heap *heap)
-// {
-// 	if (heap->heap[0].coder_id)
-// 		return (1);
-// 	return (0);
-// }
-
-void	wake_up(t_system *system) // wake up all sleeping Beauties!
+void	wake_up(t_system *system)
 {
 	int	i;
 

@@ -1,25 +1,24 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                          :::      ::::::::   #
-#   Makefile                                             :+:      :+:    :+:   #
-#                                                      +:+ +:+         +:+     #
-#   By: lsebar <marvin@42.fr>                        +#+  +:+       +#+        #
-#                                                  +#+#+#+#+#+   +#+           #
-#   Created: 2026/05/11 11:47:01 by lsebar              #+#    #+#             #
-#   Updated: 2026/05/11 11:47:01 by lsebar             ###   ########.fr       #
-#                                                                              #
-# **************************************************************************** #
 
 NAME = codexion
 
-SRCS = main.c coder_routine.c time.c parsing.c dongle.c \
-	parsing_utils.c utils.c heap.c compile.c init.c monitor.c clean.c
+SRCS = src/main.c \
+	   src/coder_routine.c \
+	   src/time.c \
+	   src/parsing.c \
+	   src/dongle.c \
+	   src/parsing_utils.c \
+	   src/utils.c \
+	   src/heap.c \
+	   src/compile.c \
+	   src/init.c \
+	   src/monitor.c \
+	   src/clean.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -pthread -g
 
 all: $(NAME)
 
