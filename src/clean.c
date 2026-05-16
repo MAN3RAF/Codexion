@@ -6,7 +6,7 @@
 /*   By: lsebar <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 08:40:06 by lsebar            #+#    #+#             */
-/*   Updated: 2026/05/11 08:40:42 by lsebar           ###   ########.fr       */
+/*   Updated: 2026/05/16 15:50:18 by lsebar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	destroy_system_mutexes(t_system *system)
 
 void	clean(t_system *system)
 {
+		\\ Destroy cond variables!!
 	destroy_dongles_mutexes(system);
 	destroy_coders_mutexes(system);
 	destroy_system_mutexes(system);
