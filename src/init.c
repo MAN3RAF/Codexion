@@ -103,11 +103,17 @@ int	data_init(t_system *system, char **argv)
 		if (!system->dongles)
 			return (1);
 		else
+		{
 			free_dongles(system);
+			free_system(system);
+			return (1);
+		}
 	}
 	if (coder_init(system))
 	{
 		free_dongles(system);
+		free_system(system);
+		destroy_coders_mutexes(system);
 		return (1);
 	}
 	threads_init(system);

@@ -88,10 +88,11 @@ int						burned_out(t_system *system, int i, int counter);
 //========Free============//
 
 void					clean(t_system *system);
-void					destroy_system_mutexes(t_system *system);
+void					free_system(t_system *system);
 void					destroy_coders_mutexes(t_system *system);
 void					destroy_dongles_mutexes(t_system *system);
 void					free_dongles(t_system *system);
+void					destroy_dongles_cond(t_system *system);
 
 //=========Time============//
 

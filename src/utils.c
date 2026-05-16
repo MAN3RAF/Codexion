@@ -12,6 +12,14 @@
 
 #include "codexion.h"
 
+void	free_system(t_system *system)
+{
+	pthread_mutex_destroy(&system->system_lock);
+	pthread_mutex_destroy(&system->print_lock);
+	pthread_mutex_destroy(&system->start_lock);
+	pthread_cond_destroy(&system->start_line);
+}
+
 void	wake_up(t_system *system)
 {
 	int	i;
