@@ -23,10 +23,6 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# ifndef DEBUGGING
-#  define DEBUGGING 0
-# endif
-
 //========pre_def_of_structs========//
 
 typedef pthread_mutex_t	t_mutex;
@@ -79,7 +75,6 @@ void					wait_for_others(t_coder *coder);
 
 void					*monitor(void *arg);
 void					ft_print(t_coder *coder, int i);
-// void	ft_putstr(char *s);
 int						is_simulation_end(t_coder *coder);
 void					wake_up(t_system *system);
 int						is_compiled_enough(t_coder *coder);
@@ -115,7 +110,6 @@ typedef struct s_node
 typedef struct s_heap
 {
 	t_node				*heap;
-	// int size;
 }						t_heap;
 
 typedef struct s_dongle
