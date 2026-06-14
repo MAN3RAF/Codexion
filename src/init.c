@@ -101,7 +101,7 @@ int	data_init(t_system *system, char **argv)
 	if (dongle_init(system))
 	{
 		if (!system->dongles)
-			return (1);
+			return (free_system(system), 1);
 		else
 		{
 			free_dongles(system);

@@ -48,7 +48,7 @@ Example:
 * **Threads documentation:** Guidelines on how to leverage pthreads for multithrading. [multithreading_in_c](https://www.geeksforgeeks.org/c/multithreading-in-c/)
 * **Dining Philosophers Problem:** Fundamental computer science problem showcasing deadlocks and starvation. [Dining_philosophers_problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem)
 * **Scheduling Algorithms:** Concepts behind FIFO and EDF (Earliest Deadline First) task schedulers. [edf_cpu_scheduling_algorithm](https://www.geeksforgeeks.org/operating-systems/earliest-deadline-first-edf-cpu-scheduling-algorithm/)
-* **AI Usage:** AI was used conceptually to assist with resolving scheduling logic, brainstorming deadlock prevention (Coffman's conditions applications), and constructing parts of this README to clearly communicate the technical achievements.
+* **AI Usage:** AI was used conceptually to assist clarify concurrency concepts and explore different approaches for synchronization, scheduling, and deadlock prevention.
 
 ## Blocking cases handled
 
