@@ -1,0 +1,162 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   codexion.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsebar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/27 09:33:05 by lsebar            #+#    #+#             */
+/*   Updated: 2026/05/11 08:41:32 by lsebar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CODEXION_H
+# define CODEXION_H
+
+# include <limits.h>
+# include <pthread.h>
+# include <stdbool.h>
+# include <stddef.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/time.h>
+# include <unistd.h>
+
+//========pre_def_of_structs========//
+
+typedef pthread_mutex_t	t_mutex;
+typedef struct s_system	t_system;
+typedef struct s_coder	t_coder;
+typedef struct s_dongle	t_dongle;
+typedef struct s_heap	t_heap;
+typedef struct s_node	t_node;
+
+//=========Parsing========//
+
+int						parse_input(int argc, char **argv);
+int						is_valid_number(char *s);
+int						is_valid_scheduler(char *scheduler);
+int						is_number_greather_intmax(char *s);
+int						check_is_digit(char *digits);
+int						is_digit(int c);
+int						is_valid_input(char **argv);
+
+//=========Init========//
+
+int						coder_init(t_system *system);
+void					system_init(t_system *system, char **argv);
+int						data_init(t_system *system, char **argv);
+int						dongle_init(t_system *system);
+void					threads_init(t_system *system);
+t_dongle				*first_and_second(t_coder *coder, int i);
+
+//=========Heap=========//
+
+void					write_heap(t_coder *c, t_heap *h, int i);
+void					swap_heap(t_heap *heap);
+void					erase_heap(t_heap *h, int index);
+void					handle_heap(t_coder *coder, t_dongle *dongle);
+
+//=========Routine========//
+
+void					*coder_routine(void *arg);
+void					hold_dongle(t_coder *coder, t_dongle *dongle);
+void					own_dongle(t_coder *coder, t_dongle *dongle);
+void					release_dongle(t_dongle *dongle);
+void					compile_phase(t_coder *coder);
+void					debugging_phase(t_coder *coder);
+void					refactoring_phase(t_coder *coder);
+void					start_simulation(t_system *system);
+void					end_simulation(t_system *system, t_coder *coder);
+void					wait_for_others(t_coder *coder);
+
+//========Monitor========//
+
+void					*monitor(void *arg);
+void					ft_print(t_coder *coder, int i);
+int						is_simulation_end(t_coder *coder);
+void					wake_up(t_system *system);
+int						is_compiled_enough(t_coder *coder);
+int						burned_out(t_system *system, int i, int counter);
+
+//========Free============//
+
+void					clean(t_system *system);
+void					free_system(t_system *system);
+void					destroy_coders_mutexes(t_system *system);
+void					destroy_dongles_mutexes(t_system *system);
+void					free_dongles(t_system *system);
+void					destroy_dongles_cond(t_system *system);
+
+//=========Time============//
+
+long long				get_time_ms(void);
+void					safe_sleep(long long wait_time);
+struct timespec			get_abs_time(long long cooldown);
+int						is_wait_time(long long start_time, long long wait_time);
+long long				get_now_time(t_coder *coder);
+
+//========Structs============//
+
+typedef struct s_node
+{
+	int					coder_id;
+	long long			deadline;
+	long long			request_time;
+
+}						t_node;
+
+typedef struct s_heap
+{
+	t_node				*heap;
+}						t_heap;
+
+typedef struct s_dongle
+{
+	t_mutex				dongle_lock;
+	int					dongle_id;
+	pthread_cond_t		waiting_room;
+	int					owner_id;
+	long long			last_dropped_time;
+	t_heap				min_heap;
+}						t_dongle;
+
+typedef struct s_coder
+{
+	int					id;
+	int					times_compiled;
+	long				last_compile;
+	t_dongle			*right_dongle;
+	t_dongle			*left_dongle;
+	t_dongle			*first;
+	t_dongle			*second;
+	pthread_t			thread;
+	t_mutex				coder_lock;
+	t_system			*system;
+
+}						t_coder;
+
+typedef struct s_system
+{
+	int					number_of_coders;
+	int					time_to_burnout;
+	int					time_to_compile;
+	int					time_to_debug;
+	int					time_to_refactor;
+	int					number_of_compiles_required;
+	int					dongle_cooldown;
+	long long			start_time_ms;
+	bool				end_simulation;
+	bool				all_threads_ready;
+	t_mutex				start_lock;
+	pthread_cond_t		start_line;
+	t_mutex				system_lock;
+	t_mutex				print_lock;
+	t_dongle			*dongles;
+	t_coder				*coders;
+	char				*scheduler;
+	pthread_t			monitor;
+}						t_system;
+
+#endif
