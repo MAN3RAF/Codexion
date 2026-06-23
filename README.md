@@ -50,7 +50,6 @@ Example:
 * **Scheduling Algorithms:** Concepts behind FIFO and EDF (Earliest Deadline First) task schedulers. [edf_cpu_scheduling_algorithm](https://www.geeksforgeeks.org/operating-systems/earliest-deadline-first-edf-cpu-scheduling-algorithm/)
 * **AI Usage:** AI was used conceptually to assist clarify concurrency concepts and explore different approaches for synchronization, scheduling, and deadlock prevention.
 
-
 ## Blocking cases handled
 
 The simulation efficiently handles several concurrency issues ensuring absolute stability:

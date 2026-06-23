@@ -50,14 +50,12 @@ void	wait_for_others(t_coder *coder)
 void	*coder_routine(void *arg)
 {
 	t_coder		*coder;
-	long long	time;
 
 	coder = (t_coder *)arg;
 	wait_for_others(coder);
 	pthread_mutex_lock(&coder->coder_lock);
 	coder->last_compile = get_time_ms();
 	pthread_mutex_unlock(&coder->coder_lock);
-	time = get_now_time(coder);
 	if (coder->id % 2 == 0)
 		safe_sleep(5);
 	while (1)

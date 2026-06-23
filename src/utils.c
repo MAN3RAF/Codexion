@@ -27,8 +27,12 @@ void	wake_up(t_system *system)
 	i = 0;
 	while (i < system->number_of_coders)
 	{
+		pthread_mutex_lock(&system->coders[i].first->dongle_lock);
 		pthread_cond_broadcast(&system->coders[i].first->waiting_room);
+		pthread_mutex_unlock(&system->coders[i].first->dongle_lock);
+		pthread_mutex_lock(&system->coders[i].second->dongle_lock);
 		pthread_cond_broadcast(&system->coders[i].second->waiting_room);
+		pthread_mutex_unlock(&system->coders[i].second->dongle_lock);
 		i++;
 	}
 }

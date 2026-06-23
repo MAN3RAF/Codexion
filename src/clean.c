@@ -17,27 +17,14 @@ void	free_dongles(t_system *system)
 	int	i;
 
 	i = 0;
-	destroy_dongles_cond(system);
 	while (i < system->number_of_coders)
 	{
 		if (system->dongles[i].min_heap.heap)
 			free(system->dongles[i].min_heap.heap);
+		pthread_cond_destroy(&system->dongles[i].waiting_room);
 		i++;
 	}
-	pthread_cond_destroy(&system->dongles->waiting_room);
 	free(system->dongles);
-}
-
-void	destroy_dongles_cond(t_system *system)
-{
-	int	i;
-
-	i = 0;
-	while (i < system->number_of_coders)
-	{
-		pthread_cond_destroy(&system->dongles->waiting_room);
-		i++;
-	}
 }
 
 void	destroy_dongles_mutexes(t_system *system)
