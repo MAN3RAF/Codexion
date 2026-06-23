@@ -1,2 +1,0 @@
-double destroy.
-variable not used.
