@@ -60,6 +60,11 @@ int	is_valid_input(char **argv)
 			printf("[ERROR] Invalid argument: %s", argv[i]);
 			return (1);
 		}
+		if (i == 1 && atoi(argv[1]) > 2000)
+		{
+			printf("[ERROR] Invalid argument: %s", argv[i]);
+			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -67,11 +72,13 @@ int	is_valid_input(char **argv)
 
 int	parse_input(int argc, char **argv)
 {
-	if (argc < 9)
+	if (argc != 9)
 	{
 		printf("[ERROR] More or Less than 9 arguments!");
 		return (1);
 	}
+	if (is_valid_input(argv))
+		return (1);
 	if (atoi(argv[1]) == 1)
 	{
 		printf("Programm can not run with 1 coder!");
@@ -82,7 +89,5 @@ int	parse_input(int argc, char **argv)
 		printf("[ERROR] Invalid scheduler: %s", argv[8]);
 		return (1);
 	}
-	if (is_valid_input(argv))
-		return (1);
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "codexion.h"
 
-int	is_simulation_end(t_coder *coder) // check if sim ended!
+int	is_simulation_end(t_coder *coder)
 {
 	int	i;
 
@@ -27,11 +27,11 @@ int	is_simulation_end(t_coder *coder) // check if sim ended!
 void	ft_print_utils(t_coder *coder, int choice, int burned_out)
 {
 	if (choice == 2 && !burned_out)
-		printf("%lld %d coder is compiling\n", get_now_time(coder), coder->id);
+		printf("%lld %d is compiling\n", get_now_time(coder), coder->id);
 	else if (choice == 3 && !burned_out)
-		printf("%lld %d coder is debugging\n", get_now_time(coder), coder->id);
+		printf("%lld %d is debugging\n", get_now_time(coder), coder->id);
 	else if (choice == 4 && !burned_out)
-		printf("%lld %d coder is refactoring\n", get_now_time(coder),
+		printf("%lld %d is refactoring\n", get_now_time(coder),
 			coder->id);
 }
 
